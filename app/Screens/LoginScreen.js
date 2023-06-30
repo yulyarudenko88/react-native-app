@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,54 +6,70 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
 } from "react-native";
 
 import BgImage from "../assets/images/bgImage.jpg";
 
 const LoginScreen = () => {
   const [activeInput, setActiveInput] = useState("");
+  const [isKeyboardShow, setIsKeyboardShow] = useState(false);
 
   const handleInputFocus = (inputName) => {
     setActiveInput(inputName);
+    setIsKeyboardShow(true);
   };
 
   const handleInputBlur = () => {
     setActiveInput("");
+    setIsKeyboardShow(false);
   };
 
   return (
     <ImageBackground source={BgImage} style={styles.image} resizeMode="cover">
-      <View style={styles.form}>
-        <Text style={styles.formTitle}>Увійти</Text>
-        <View style={{ marginBottom: 16 }}>
-          <TextInput
-            style={[
-              styles.formInput,
-              activeInput === "email" && styles.activeFormInput,
-            ]}
-            onFocus={() => handleInputFocus("email")}
-            onBlur={handleInputBlur}
-            placeholder="Адреса електронної пошти"
-          />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View
+          style={{ ...styles.form, paddingBottom: isKeyboardShow ? 32 : 144 }}
+        >
+          <Text style={styles.formTitle}>Увійти</Text>
+          <View style={{ marginBottom: 16 }}>
+            <TextInput
+              style={[
+                styles.formInput,
+                activeInput === "email" && styles.activeFormInput,
+              ]}
+              onFocus={() => handleInputFocus("email")}
+              onBlur={handleInputBlur}
+              placeholder="Адреса електронної пошти"
+            />
+          </View>
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={[
+                styles.formInput,
+                activeInput === "password" && styles.activeFormInput,
+              ]}
+              onFocus={() => handleInputFocus("password")}
+              onBlur={handleInputBlur}
+              placeholder="Пароль"
+              secureTextEntry={true}
+            />
+            <Text style={styles.hiddenText}>Показати</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={Keyboard.dismiss}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.buttonText}>Увійти</Text>
+          </TouchableOpacity>
+          <Text style={styles.breadcrumbs}>Немає акаунту? Зареєструватися</Text>
         </View>
-        <View style={styles.inputWrapper}>
-          <TextInput
-            style={[
-              styles.formInput,
-              activeInput === "password" && styles.activeFormInput,
-            ]}
-            onFocus={() => handleInputFocus("password")}
-            onBlur={handleInputBlur}
-            placeholder="Пароль"
-            secureTextEntry={true}
-          />
-          <Text style={styles.hiddenText}>Показати</Text>
-        </View>
-        <TouchableOpacity style={styles.button} activeOpacity={0.8}>
-          <Text style={styles.buttonText}>Увійти</Text>
-        </TouchableOpacity>
-        <Text style={styles.breadcrumbs}>Немає акаунту? Зареєструватися</Text>
-      </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 };
@@ -68,7 +84,7 @@ const styles = StyleSheet.create({
     position: "relative",
     paddingHorizontal: 16,
     paddingTop: 32,
-    paddingBottom: 144,
+    // paddingBottom: 144,
 
     backgroundColor: "#fff",
     borderTopLeftRadius: 25,
@@ -110,7 +126,7 @@ const styles = StyleSheet.create({
     // fontWeight: 400,
   },
 
-  activeFormInput: { color: "#FF6C00" },
+  activeFormInput: { borderColor: "#FF6C00" },
 
   hiddenText: {
     position: "absolute",
