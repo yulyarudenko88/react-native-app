@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,6 +12,16 @@ import { AntDesign } from "@expo/vector-icons";
 import BgImage from "../assets/images/bgImage.jpg";
 
 const RegistrationScreen = () => {
+  const [activeInput, setActiveInput] = useState("");
+
+  const handleInputFocus = (inputName) => {
+    setActiveInput(inputName);
+  };
+
+  const handleInputBlur = () => {
+    setActiveInput("");
+  };
+
   return (
     <ImageBackground source={BgImage} style={styles.image} resizeMode="cover">
       <View style={styles.form}>
@@ -22,17 +32,35 @@ const RegistrationScreen = () => {
         </View>
         <Text style={styles.formTitle}>Реєстрація</Text>
         <View style={{ marginBottom: 16 }}>
-          <TextInput style={styles.formInput} placeholder="Логін" />
+          <TextInput
+            style={[
+              styles.formInput,
+              activeInput === "login" && styles.activeFormInput,
+            ]}
+            onFocus={() => handleInputFocus("login")}
+            onBlur={handleInputBlur}
+            placeholder="Логін"
+          />
         </View>
         <View style={{ marginBottom: 16 }}>
           <TextInput
-            style={styles.formInput}
+            style={[
+              styles.formInput,
+              activeInput === "email" && styles.activeFormInput,
+            ]}
+            onFocus={() => handleInputFocus("email")}
+            onBlur={handleInputBlur}
             placeholder="Адреса електронної пошти"
           />
         </View>
         <View style={styles.inputWrapper}>
           <TextInput
-            style={styles.formInput}
+            style={[
+              styles.formInput,
+              activeInput === "password" && styles.activeFormInput,
+            ]}
+            onFocus={() => handleInputFocus("password")}
+            onBlur={handleInputBlur}
             placeholder="Пароль"
             secureTextEntry={true}
           />
@@ -125,6 +153,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     // fontWeight: 400,
   },
+
+  activeFormInput: { color: "#FF6C00" },
 
   hiddenText: {
     position: "absolute",
