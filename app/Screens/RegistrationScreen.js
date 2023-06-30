@@ -6,6 +6,9 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -13,64 +16,77 @@ import BgImage from "../assets/images/bgImage.jpg";
 
 const RegistrationScreen = () => {
   const [activeInput, setActiveInput] = useState("");
+  const [isKeyboardShow, setIsKeyboardShow] = useState(false);
 
   const handleInputFocus = (inputName) => {
     setActiveInput(inputName);
+    setIsKeyboardShow(true);
   };
 
   const handleInputBlur = () => {
     setActiveInput("");
+    setIsKeyboardShow(false);
   };
 
   return (
     <ImageBackground source={BgImage} style={styles.image} resizeMode="cover">
-      <View style={styles.form}>
-        <View style={styles.avatar}>
-          <TouchableOpacity style={styles.addAvatarBtn}>
-            <AntDesign name="plus" size={18} color="#FF6C00" />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View
+          style={{ ...styles.form, paddingBottom: isKeyboardShow ? 32 : 78 }}
+        >
+          <View style={styles.avatar}>
+            <TouchableOpacity style={styles.addAvatarBtn}>
+              <AntDesign name="plus" size={18} color="#FF6C00" />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.formTitle}>Реєстрація</Text>
+          <View style={{ marginBottom: 16 }}>
+            <TextInput
+              style={[
+                styles.formInput,
+                activeInput === "login" && styles.activeFormInput,
+              ]}
+              onFocus={() => handleInputFocus("login")}
+              onBlur={handleInputBlur}
+              placeholder="Логін"
+            />
+          </View>
+          <View style={{ marginBottom: 16 }}>
+            <TextInput
+              style={[
+                styles.formInput,
+                activeInput === "email" && styles.activeFormInput,
+              ]}
+              onFocus={() => handleInputFocus("email")}
+              onBlur={handleInputBlur}
+              placeholder="Адреса електронної пошти"
+            />
+          </View>
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={[
+                styles.formInput,
+                activeInput === "password" && styles.activeFormInput,
+              ]}
+              onFocus={() => handleInputFocus("password")}
+              onBlur={handleInputBlur}
+              placeholder="Пароль"
+              secureTextEntry={true}
+            />
+            <Text style={styles.hiddenText}>Показати</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={Keyboard.dismiss}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.buttonText}>Зареєстуватися</Text>
           </TouchableOpacity>
+          <Text style={styles.breadcrumbs}>Вже є акаунт? Увійти</Text>
         </View>
-        <Text style={styles.formTitle}>Реєстрація</Text>
-        <View style={{ marginBottom: 16 }}>
-          <TextInput
-            style={[
-              styles.formInput,
-              activeInput === "login" && styles.activeFormInput,
-            ]}
-            onFocus={() => handleInputFocus("login")}
-            onBlur={handleInputBlur}
-            placeholder="Логін"
-          />
-        </View>
-        <View style={{ marginBottom: 16 }}>
-          <TextInput
-            style={[
-              styles.formInput,
-              activeInput === "email" && styles.activeFormInput,
-            ]}
-            onFocus={() => handleInputFocus("email")}
-            onBlur={handleInputBlur}
-            placeholder="Адреса електронної пошти"
-          />
-        </View>
-        <View style={styles.inputWrapper}>
-          <TextInput
-            style={[
-              styles.formInput,
-              activeInput === "password" && styles.activeFormInput,
-            ]}
-            onFocus={() => handleInputFocus("password")}
-            onBlur={handleInputBlur}
-            placeholder="Пароль"
-            secureTextEntry={true}
-          />
-          <Text style={styles.hiddenText}>Показати</Text>
-        </View>
-        <TouchableOpacity style={styles.button} activeOpacity={0.8}>
-          <Text style={styles.buttonText}>Зареєстуватися</Text>
-        </TouchableOpacity>
-        <Text style={styles.breadcrumbs}>Вже є акаунт? Увійти</Text>
-      </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 };
@@ -85,7 +101,7 @@ const styles = StyleSheet.create({
     position: "relative",
     paddingHorizontal: 16,
     paddingTop: 92,
-    paddingBottom: 78,
+    // paddingBottom: 78,
 
     backgroundColor: "#fff",
     borderTopLeftRadius: 25,
@@ -154,7 +170,7 @@ const styles = StyleSheet.create({
     // fontWeight: 400,
   },
 
-  activeFormInput: { color: "#FF6C00" },
+  activeFormInput: { borderColor: "#FF6C00" },
 
   hiddenText: {
     position: "absolute",

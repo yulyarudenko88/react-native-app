@@ -1,15 +1,15 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View,TouchableWithoutFeedback,Keyboard } from "react-native";
 
 import RegistrationScreen from "./Screens/RegistrationScreen";
 import LoginScreen from "./Screens/LoginScreen"
 
 export default function App() {
-  return (
+  return (<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
-      {/* <RegistrationScreen /> */}
-      <LoginScreen />
-    </View>
+      <RegistrationScreen />
+      {/* <LoginScreen /> */}
+    </View></TouchableWithoutFeedback>
   );
 }
 
