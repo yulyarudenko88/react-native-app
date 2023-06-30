@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
     position: "relative",
     paddingHorizontal: 16,
     paddingTop: 92,
-    // paddingBottom: 78,
 
     backgroundColor: "#fff",
     borderTopLeftRadius: 25,
@@ -140,10 +139,8 @@ const styles = StyleSheet.create({
     marginBottom: 33,
 
     color: "#212121",
-    // fontFamily: "Roboto",
-    fontStyle: "normal",
+    fontFamily: "Roboto-Medium",
     fontSize: 30,
-    fontWeight: 500,
     lineHeight: 35,
     letterSpacing: 0.3,
   },
@@ -164,10 +161,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
 
     color: "#212121",
-    // fontFamily: "Roboto",
-    fontStyle: "normal",
+    fontFamily: "Roboto-Regular",
     fontSize: 16,
-    // fontWeight: 400,
   },
 
   activeFormInput: { borderColor: "#FF6C00" },
@@ -178,10 +173,8 @@ const styles = StyleSheet.create({
     top: 16,
 
     color: "#1B4371",
-    // fontFamily: "Roboto",
-    fontStyle: "normal",
+    fontFamily: "Roboto-Regular",
     fontSize: 16,
-    fontWeight: 400,
   },
 
   button: {
@@ -195,19 +188,15 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: "center",
     color: "#FFF",
-    // fontFamily: "Roboto",
-    fontStyle: "normal",
+    fontFamily: "Roboto-Regular",
     fontSize: 16,
-    fontWeight: 400,
   },
 
   breadcrumbs: {
     textAlign: "center",
     color: "#1B4371",
-    // fontFamily: "Roboto",
-    fontStyle: "normal",
+    fontFamily: "Roboto-Regular",
     fontSize: 16,
-    fontWeight: 400,
   },
 });
 
