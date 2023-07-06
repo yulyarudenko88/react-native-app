@@ -24,6 +24,8 @@ const formReducer = (state, action) => {
       return { ...state, email: action.payload };
     case "password":
       return { ...state, password: action.payload };
+    case "reset":
+      return initialFormData;
     default:
       return state;
   }
@@ -42,9 +44,7 @@ const RegistrationScreen = () => {
   };
 
   const resetForm = () => {
-    dispatch({ type: "login", payload: "" });
-    dispatch({ type: "email", payload: "" });
-    dispatch({ type: "password", payload: "" });
+    dispatch({ type: "reset" });
   };
 
   const handleInputFocus = (inputName) => {
